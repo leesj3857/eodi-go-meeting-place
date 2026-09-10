@@ -1,11 +1,10 @@
 // 데모(mock) 모드 진입점.
-// VITE_USE_MOCK=true 이면 백엔드/지오코딩/주소검색/지하철 API를 모두 로컬 데이터로 대체합니다.
 import { ADDRESSES, DEMO_CODE } from './data';
 import { db } from './db';
 import type { JusoResult } from '../utils/jusoApi';
 import type { LatLng } from '../utils/getLng';
 
-export const isMockMode = import.meta.env.VITE_USE_MOCK === 'true';
+export const isMockMode = true;
 
 export { mockAdapter } from './adapter';
 export { DEMO_CODE };
