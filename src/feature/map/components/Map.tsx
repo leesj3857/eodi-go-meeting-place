@@ -58,11 +58,15 @@ const MapPage = ({mode, setMode, places, participants, refetchPlaces, refetchMid
     [map, setMode]
   );
 
-  // filteredPlaces가 바뀔 때마다 지도 범위 업데이트
+  // 카테고리가 바뀌었을 때(또는 최초 로드 시)만 지도 범위 업데이트.
+  // 투표 후 places 재조회로 filteredPlaces 참조가 바뀌어도 지도 위치를 유지한다.
+  const fittedCategoryRef = useRef<string | null>(null);
   useEffect(() => {
     if (!map || filteredPlaces.length === 0) return;
+    if (fittedCategoryRef.current === selectedCategory) return;
     const naver = (window as any).naver;
     if (!naver?.maps) return;
+    fittedCategoryRef.current = selectedCategory;
 
     // 필터링된 마커들의 좌표를 포함하는 영역 계산
     const bounds = new naver.maps.LatLngBounds();
@@ -78,7 +82,7 @@ const MapPage = ({mode, setMode, places, participants, refetchPlaces, refetchMid
       left: 0     // 좌측 여백
     });
 
-  }, [map, filteredPlaces]);
+  }, [map, filteredPlaces, selectedCategory]);
 
   // ② 공통 포커스: 선택 → 맵 이동 → 마커 살짝 확대 → 시트 모드 변경
   
