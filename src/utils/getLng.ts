@@ -1,4 +1,5 @@
 // JSONP를 이용해 CORS를 우회하여 vWorld API를 호출합니다.
+import { isMockMode, mockGeocode } from '../mock';
 
 export interface LatLng {
   lat: number;
@@ -82,6 +83,7 @@ function jsonpRequest(url: string, params: Record<string, string>, callbackParam
 
 export async function getLatLngByAddress(address: string): Promise<LatLng | null> {
   if (!address || !address.trim()) return null;
+  if (isMockMode) return mockGeocode(address);
   const normalizedAddress = extractRoadAddress(address);
 
   const apiKey = '9B2F5B73-7970-38B2-8342-C3C170DC59B7';

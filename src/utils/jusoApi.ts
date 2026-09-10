@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isMockMode, mockSearchAddress } from '../mock';
 
 export interface JusoResult {
   bdNm: string;
@@ -7,8 +8,8 @@ export interface JusoResult {
 }
 
 export async function fetchBuildingNamesByAddress(keyword: string): Promise<JusoResult[]> {
+  if (isMockMode) return mockSearchAddress(keyword);
   const confmKeyDEV = 'U01TX0FVVEgyMDI1MDUyMDE3MzcxNjExNTc2MjY='; 
-  const confmKeyPROD = 'U01TX0FVVEgyMDI1MDUyMDE3MzcxNjExNTc2MjI=';
   const url = 'https://business.juso.go.kr/addrlink/addrLinkApi.do';
 
   try {

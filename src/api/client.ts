@@ -1,15 +1,17 @@
 import axios from "axios";
+import { isMockMode, mockAdapter } from "../mock";
 
 // API 기본 설정
 const API_BASE_URL = "https://o-digo.com";
 
 // axios 인스턴스 생성
 export const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: isMockMode ? "http://mock.invalid" : API_BASE_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
+  ...(isMockMode ? { adapter: mockAdapter } : {}),
 });
 
 // 요청 인터셉터: /meetings/{code}/* 형태의 요청에 대해

@@ -76,7 +76,7 @@ export default function Finished({ onComplete, userInfo }: { onComplete?: () => 
 
   const handleCopy = () => {
     setShowToast(true);
-    navigator.clipboard.writeText(`https://o-digo.com/reply/${meeting?.linkCode}`);
+    navigator.clipboard.writeText(`${window.location.origin}/reply/${meeting?.linkCode}`);
   }
 
   const handleComplete = () => {

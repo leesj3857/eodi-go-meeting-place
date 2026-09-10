@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { typography, applyTypography } from '../styles/typography';
+import { applyTypography } from '../styles/typography';
 import { grayscale } from '../styles/colors/grayscale';
 import { primary } from '../styles/colors/primary';
 import { useNavigate } from 'react-router-dom';
 import { button } from '../styles/button';
+import { isMockMode, enterDemo } from '../mock';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,6 +26,17 @@ const Home = () => {
         친구들에게 공유해보세요
       </Description>
       <Button onClick={() => navigate('/make')}>초대장 만들기</Button>
+      {isMockMode && (
+        <DemoBox>
+          <DemoButton onClick={() => navigate(`/map/${enterDemo()}`)}>
+            데모 모임 둘러보기
+          </DemoButton>
+          <DemoNote>
+            백엔드 없이 동작하는 데모 버전이에요.<br />
+            모든 데이터는 브라우저에만 저장됩니다.
+          </DemoNote>
+        </DemoBox>
+      )}
     </Container>
   );
 };
@@ -79,7 +91,28 @@ const Description = styled.div`
 const Button = styled.button`
   width: 260px;
   height: 55px;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
   ${button.Primary}
   ${applyTypography('label.large')}
+`;
+
+const DemoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+`;
+
+const DemoButton = styled.button`
+  width: 260px;
+  height: 50px;
+  ${button.Tertiary}
+  ${applyTypography('label.large')}
+`;
+
+const DemoNote = styled.div`
+  color: ${grayscale[50]};
+  ${applyTypography('body.small')}
+  text-align: center;
 `;

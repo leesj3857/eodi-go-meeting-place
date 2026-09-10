@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isMockMode, mockSubwayLines } from '../mock';
 // 서울 열린데이터광장 API를 사용하여 지하철역 정보를 가져오는 함수
 export const getSubwayStationInfo = async (stationName: string): Promise<any> => {
   try {
@@ -21,6 +22,7 @@ export const getSubwayStationInfo = async (stationName: string): Promise<any> =>
 
 // API를 사용하여 지하철역 호선을 조회하는 함수
 export const getLineSubwayFromAPI = async (stationName: string): Promise<string[]> => {
+  if (isMockMode) return mockSubwayLines(stationName);
   try {
     const jsonData = await getSubwayStationInfo(stationName);
     if (jsonData.SearchSTNBySubwayLineInfo && jsonData.SearchSTNBySubwayLineInfo.row) {
